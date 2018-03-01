@@ -1,14 +1,25 @@
 package com.sctcs.jacobin.weathertracker;
 
+import android.app.LoaderManager;
+import android.content.AsyncTaskLoader;
+import android.content.Loader;
 import android.location.Address;
 import android.location.Geocoder;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.Response.ErrorListener;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -17,10 +28,15 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback ,GoogleMap.OnMarkerClickListener{
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback ,GoogleMap.OnMarkerClickListener {
 
     private Marker marker;
     private GoogleMap mMap;
@@ -28,6 +44,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Button searchbutton;
     private String api_id;
 
+    private static  final  int LOADER_ID =3421;
+
+    private String response_from;
 
 
 
@@ -46,12 +65,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         api_id=getResources().getString(R.string.api_id);
 
 
+
+
+
+
+
         searchbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 handle();
             }
         });
+
+
 
 
     }
@@ -122,6 +148,45 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //TODO :  IMPLEMENT WEATHER API  CALL
         URL callurl= NetworkUtils.buid_url(latLng,api_id);
 
+        RequestQueue queue = Volley.newRequestQueue(this);
+        StringRequest request=new StringRequest(Request.Method.GET, callurl.toString(),
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.v("TAG",response.substring(0,20));
+
+                        try {
+                            JSONObject object=new JSONObject(response);
+                            JSONArray weather_array= object.getJSONArray("weather");
+                            JSONObject first_object=weather_array.getJSONObject(0);
+                            response_from=first_object.getString("main");
+                            Log.v("TAG",response_from);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                }, new Response.ErrorListener()
+                {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.v("TAG",error.toString());
+
+                    }
+                });
+                queue.add(request);
+
+
+
+
+
+
         return  true;
     }
+
+
+
 }
