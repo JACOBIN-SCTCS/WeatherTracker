@@ -27,6 +27,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -48,6 +50,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private String response_from;
 
+    FirebaseDatabase database;
+    DatabaseReference myrefernce;
+
 
 
     @Override
@@ -63,6 +68,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         searchbutton=(Button) findViewById(R.id.searchbutton);
 
         api_id=getResources().getString(R.string.api_id);
+
+        database=FirebaseDatabase.getInstance();
+        myrefernce=database.getReference("weather");
 
 
 
@@ -160,6 +168,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             JSONArray weather_array= object.getJSONArray("weather");
                             JSONObject first_object=weather_array.getJSONObject(0);
                             response_from=first_object.getString("main");
+                            myrefernce.setValue(response_from);
                             Log.v("TAG",response_from);
 
                         } catch (JSONException e) {
