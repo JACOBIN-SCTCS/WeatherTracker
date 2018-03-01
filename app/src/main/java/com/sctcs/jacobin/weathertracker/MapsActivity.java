@@ -17,6 +17,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.net.URL;
 import java.util.List;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback ,GoogleMap.OnMarkerClickListener{
@@ -25,6 +26,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     private EditText editText;
     private Button searchbutton;
+    private String api_id;
+
+
 
 
     @Override
@@ -39,6 +43,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         editText=(EditText) findViewById(R.id.searchbox);
         searchbutton=(Button) findViewById(R.id.searchbutton);
 
+        api_id=getResources().getString(R.string.api_id);
+
 
         searchbutton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,7 +53,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
-        
+
     }
 
 
@@ -114,6 +120,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         Toast.makeText(this,"LOCATION: " + latLng.latitude +"," + latLng.longitude +"" ,Toast.LENGTH_SHORT).show();
         //TODO :  IMPLEMENT WEATHER API  CALL
+        URL callurl= NetworkUtils.buid_url(latLng,api_id);
 
         return  true;
     }

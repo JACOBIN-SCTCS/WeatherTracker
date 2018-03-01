@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1057388888302",
+    "firebase_url": "https://nodemcuiot-96242.firebaseio.com",
+    "project_id": "nodemcuiot-96242",
+    "storage_bucket": "nodemcuiot-96242.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1057388888302:android:7b2037e0d6167ffe",
+        "android_client_info": {
+          "package_name": "com.sctcs.jacobin.weathertracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1057388888302-bp3s6ir4k66j7nbgkvtq04jbol5oqfp7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sctcs.jacobin.weathertracker",
+            "certificate_hash": "350ca375a8ed7a071a4c27ac069fa474260e8a26"
+          }
+        },
+        {
+          "client_id": "1057388888302-vt9r47petlcidtm53a3di1j6fcd38tf0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA6DXHc-gsM5IgfXKOMHKN6OwZvi49F0QY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1057388888302-vt9r47petlcidtm53a3di1j6fcd38tf0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
